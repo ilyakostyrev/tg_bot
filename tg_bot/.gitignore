@@ -1,0 +1,31 @@
+# добавь исключения для файлов, которые не должны попадать в репозиторий
+__pycache__/
+*.pyc  
+env/
+.vscode/
+.DS_Store
+instance/
+*.sqlite3
+media/
+*.log
+coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+.eggs/
+tox/
+.pytest_cache/
+.coverage
+.cache
+.pyre/
+.mypy_cache/
+.idea/
+*.iml
+*.swp
+*.bak
+*.tmp
+*.old
+*.orig
+*.rej
+# End of tg_bot/.gitignore
