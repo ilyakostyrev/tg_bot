@@ -1,4 +1,4 @@
-from bd_trainer import views
+from . import views
 from django.urls import path
 # Trainer URLs
 urlpatterns = [
