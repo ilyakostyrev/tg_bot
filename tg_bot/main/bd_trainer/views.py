@@ -34,3 +34,54 @@ def trainer_create(request):
             'email': trainer.email,
         })
     return HttpResponseBadRequest('Только POST запрос')
+
+@csrf_exempt
+def trainer_update(request, tg_id):
+    if request.method == 'PUT':
+        data = parse_json(request)
+        if not data:
+            return HttpResponseBadRequest('Ошибка парсинга JSON')
+        trainer = get_object_or_404(Trainer, tg_id=tg_id)
+        trainer.fullname = data.get('fullname', trainer.fullname)
+        trainer.username = data.get('username', trainer.username)
+        trainer.email = data.get('email', trainer.email)
+        trainer.save()
+        return JsonResponse({
+            'tg_id': str(trainer.tg_id),
+            'fullname': trainer.fullname,
+            'username': trainer.username,
+            'email': trainer.email,
+        })
+    return HttpResponseBadRequest('Только PUT запрос')
+
+@csrf_exempt
+def trainer_delete(request, tg_id):
+    if request.method == 'DELETE':
+        trainer = get_object_or_404(Trainer, tg_id=tg_id)
+        trainer.delete()
+        return HttpResponse(status=204)
+    return HttpResponseBadRequest('Только DELETE запрос')
+
+@csrf_exempt
+def trainer_detail(request, tg_id):
+    trainer = get_object_or_404(Trainer, tg_id=tg_id)
+    return JsonResponse({
+        'tg_id': str(trainer.tg_id),
+        'fullname': trainer.fullname,
+        'username': trainer.username,
+        'email': trainer.email,
+    })  
+
+@csrf_exempt
+def trainer_list(request):
+    trainers = Trainer.objects.all()
+    trainers_data = []
+    for trainer in trainers:
+        trainers_data.append({
+            'tg_id': str(trainer.tg_id),
+            'fullname': trainer.fullname,
+            'username': trainer.username,
+            'email': trainer.email,
+        })
+    return JsonResponse(trainers_data, safe=False)
+
